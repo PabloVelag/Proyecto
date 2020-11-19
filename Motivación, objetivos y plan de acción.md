@@ -1,4 +1,4 @@
-File de lo que me motivo a hacer el proyecto.
+File de lo que me motivo a hacer el proyecto. 
 
 Para mi proyecto de Ciencia de Datos me pidieron que trabajara en un tema que me interesara mucho. Al principio estaba indeciso ya que tenía innumerables opciones. Finalmente, me tope con una base de datos muy buena de un tema muy recurrente en la zona en la que vivo. 
 
