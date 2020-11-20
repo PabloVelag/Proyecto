@@ -1,0 +1,311 @@
+import pandas as pd
+import numpy as np
+import json 
+import requests  
+
+url = 'https://datos.cdmx.gob.mx/api/v2/catalog/datasets/carpetas-de-investigacion-pgj-de-la-ciudad-de-mexico/exports/json'
+response= requests.get(url)
+
+df = pd.read_json(response.content)
+
+#por ahora vamos a trabajar con carpetas desde el 2015
+#Crear un data frame con pura categoría de robo
+#Crear un data frame de sólo las delegaciones de la CDMX
+#vamos a crear un nuevo data frame con nuestras columnas de interés
+
+ao = df['ao_hechos'].isin(['2016','2017','2018','2019','2020'])
+
+Cat_del = df['categoria_delito'].isin(['ROBO A CASA HABITACIÓN CON VIOLENCIA',  
+'ROBO A CUENTAHABIENTE SALIENDO DEL CAJERO CON VIOLENCIA',      
+'ROBO A NEGOCIO CON VIOLENCIA',                               
+'ROBO A PASAJERO A BORDO DE MICROBUS CON Y SIN VIOLENCIA',    
+'ROBO A PASAJERO A BORDO DE TAXI CON VIOLENCIA',               
+'ROBO A PASAJERO A BORDO DEL METRO CON Y SIN VIOLENCIA',       
+'ROBO A REPARTIDOR CON Y SIN VIOLENCIA',                       
+'ROBO A TRANSEUNTE EN VÍA PÚBLICA CON Y SIN VIOLENCIA',       
+'ROBO A TRANSPORTISTA CON Y SIN VIOLENCIA',                      
+'ROBO DE VEHÍCULO CON Y SIN VIOLENCIA'])
+
+Alc_he = df['alcaldia_hechos'].isin(['ALVARO OBREGON','AZCAPOTZALCO','BENITO JUAREZ','COYOACAN','CUAJIMALPA DE MORELOS','CUAUHTEMOC','GUSTAVO A MADERO','IZTACALCO','IZTAPALAPA','LA MAGDALENA CONTRERAS','MIGUEL HIDALGO','MILPA ALTA','TLAHUAC','TLALPAN','VENUSTIANO CARRANZA','XOCHIMILCO'])
+
+df1 = df[ao & Cat_del & Alc_he]
+df1 = df1.drop(columns=['agencia', 'unidad_investigacion', 'ao_inicio', 'mes_inicio','fecha_inicio','calle_hechos2'])
+#df1 = df1.drop(columns=['agencia', 'unidad_investigacion','fecha_inicio','calle_hechos2'])
+print(df1)
+print(df1.dtypes)
+df1.to_csv('carpetas_limpio.csv')
+
+#Ya tenemos nuestro data frame y lo exportamos como csv
+\
+
+#El número de carpetas de investigación por año
+delitos_ao = df1.pivot_table(index=['ao_hechos'], aggfunc='size')
+print(delitos_ao)
+
+#Cuando se empezó la investigación por mes
+#delitos_mes_in = df1.pivot_table(index=['mes_inicio'], aggfunc='size')
+#print(delitos_mes_in)
+
+#El número de carpetas de investigación por mes
+delitos_mes = df1.pivot_table(index=['mes_hechos'], aggfunc='size')
+print(delitos_mes)
+
+#El número de carpetas de investigación por alcaldía
+delitos_alc = df1.pivot_table(index=['alcaldia_hechos'], aggfunc='size')
+print(delitos_alc)
+
+#El número de carpetas de investigación por categoria del delito
+delitos_cat = df1.pivot_table(index=['categoria_delito'], aggfunc='size')
+print(delitos_cat)
+\
+
+#crear un frame por alcaldía y resolver preguntas
+dele1 = df1['alcaldia_hechos']=='ALVARO OBREGON'
+df1_1 = df1[dele1]
+print("Alvaro Obregón:")
+print(df1_1)
+
+#El número de carpetas de investigación por año
+delitos_ao1 = df1_1.pivot_table(index=['ao_hechos'], aggfunc='size')
+print(delitos_ao1)
+
+#El número de carpetas de investigación por mes
+delitos_mes1 = df1_1.pivot_table(index=['mes_hechos'], aggfunc='size')
+print(delitos_mes1)
+
+#El número de carpetas de investigación por categoria del delito
+delitos_cat1 = df1_1.pivot_table(index=['categoria_delito'], aggfunc='size')
+print(delitos_cat1)
+\
+
+dele2 = df1['alcaldia_hechos']=='AZCAPOTZALCO'
+df1_2 = df1[dele2]
+print("Azcapotzalco")
+print(df1_2)
+
+#El número de carpetas de investigación por año
+delitos_ao2 = df1_2.pivot_table(index=['ao_hechos'], aggfunc='size')
+print(delitos_ao2)
+
+#El número de carpetas de investigación por mes
+delitos_mes2 = df1_2.pivot_table(index=['mes_hechos'], aggfunc='size')
+print(delitos_mes2)
+
+#El número de carpetas de investigación por categoria del delito
+delitos_cat2 = df1_2.pivot_table(index=['categoria_delito'], aggfunc='size')
+print(delitos_cat2)
+\
+
+dele3 = df1['alcaldia_hechos']=='BENITO JUAREZ'
+df1_3 = df1[dele3]
+print("Benito Juárez")
+print(df1_3)
+
+#El número de carpetas de investigación por año
+delitos_ao3 = df1_3.pivot_table(index=['ao_hechos'], aggfunc='size')
+print(delitos_ao3)
+
+#El número de carpetas de investigación por mes
+delitos_mes3 = df1_3.pivot_table(index=['mes_hechos'], aggfunc='size')
+print(delitos_mes3)
+
+#El número de carpetas de investigación por categoria del delito
+delitos_cat3 = df1_3.pivot_table(index=['categoria_delito'], aggfunc='size')
+print(delitos_cat3)
+\
+
+dele4 = df1['alcaldia_hechos']=='COYOACAN'
+df1_4 = df1[dele4]
+print("Coyoacán")
+print(df1_4)
+
+#El número de carpetas de investigación por año
+delitos_ao4 = df1_4.pivot_table(index=['ao_hechos'], aggfunc='size')
+print(delitos_ao4)
+
+#El número de carpetas de investigación por mes
+delitos_mes4 = df1_4.pivot_table(index=['mes_hechos'], aggfunc='size')
+print(delitos_mes4)
+
+#El número de carpetas de investigación por categoria del delito
+delitos_cat4 = df1_4.pivot_table(index=['categoria_delito'], aggfunc='size')
+print(delitos_cat4)
+\
+
+dele5 = df1['alcaldia_hechos']=='CUAJIMALPA DE MORELOS'
+df1_5 = df1[dele5]
+print("Cuajimalpa")
+print(df1_5)
+
+#El número de carpetas de investigación por año
+delitos_ao5 = df1_5.pivot_table(index=['ao_hechos'], aggfunc='size')
+print(delitos_ao5)
+
+#El número de carpetas de investigación por mes
+delitos_mes5 = df1_5.pivot_table(index=['mes_hechos'], aggfunc='size')
+print(delitos_mes5)
+
+#El número de carpetas de investigación por categoria del delito
+delitos_cat5 = df1_5.pivot_table(index=['categoria_delito'], aggfunc='size')
+print(delitos_cat5)
+\
+
+dele6 = df1['alcaldia_hechos']=='CUAUHTEMOC'
+df1_6 = df1[dele6]
+print("Cuauhtemoc")
+print(df1_6)
+
+#El número de carpetas de investigación por año
+delitos_ao6 = df1_6.pivot_table(index=['ao_hechos'], aggfunc='size')
+print(delitos_ao6)
+
+#El número de carpetas de investigación por mes
+delitos_mes6 = df1_6.pivot_table(index=['mes_hechos'], aggfunc='size')
+print(delitos_mes6)
+
+#El número de carpetas de investigación por categoria del delito
+delitos_cat6 = df1_6.pivot_table(index=['categoria_delito'], aggfunc='size')
+print(delitos_cat6)
+\
+
+dele7 = df1['alcaldia_hechos']=='GUSTAVO A MADERO'
+df1_7 = df1[dele7]
+print("Gustavo A. Madero")
+print(df1_7)
+
+#El número de carpetas de investigación por año
+delitos_ao7 = df1_7.pivot_table(index=['ao_hechos'], aggfunc='size')
+print(delitos_ao7)
+
+#El número de carpetas de investigación por mes
+delitos_mes7 = df1_7.pivot_table(index=['mes_hechos'], aggfunc='size')
+print(delitos_mes7)
+
+#El número de carpetas de investigación por categoria del delito
+delitos_cat7 = df1_7.pivot_table(index=['categoria_delito'], aggfunc='size')
+print(delitos_cat7)
+\
+
+dele8 = df1['alcaldia_hechos']=='IZTACALCO'
+df1_8 = df1[dele8]
+print("Iztacalco")
+print(df1_8)
+
+#El número de carpetas de investigación por año
+delitos_ao8 = df1_8.pivot_table(index=['ao_hechos'], aggfunc='size')
+print(delitos_ao8)
+
+#El número de carpetas de investigación por mes
+delitos_mes8 = df1_8.pivot_table(index=['mes_hechos'], aggfunc='size')
+print(delitos_mes8)
+
+#El número de carpetas de investigación por categoria del delito
+delitos_cat8 = df1_8.pivot_table(index=['categoria_delito'], aggfunc='size')
+print(delitos_cat8)
+\
+
+dele9 = df1['alcaldia_hechos']=='IZTAPALAPA'
+df1_9 = df1[dele9]
+print("Iztapalapa")
+print(df1_9)
+
+#El número de carpetas de investigación por año
+delitos_ao9 = df1_9.pivot_table(index=['ao_hechos'], aggfunc='size')
+print(delitos_ao9)
+
+#El número de carpetas de investigación por mes
+delitos_mes9 = df1_9.pivot_table(index=['mes_hechos'], aggfunc='size')
+print(delitos_mes9)
+
+#El número de carpetas de investigación por categoria del delito
+delitos_cat9 = df1_9.pivot_table(index=['categoria_delito'], aggfunc='size')
+print(delitos_cat9)
+\
+
+dele10 = df1['alcaldia_hechos']=='LA MAGDALENA CONTRERAS'
+df1_10 = df1[dele10]
+print("La Magdalena Contreras")
+print(df1_10)
+
+#El número de carpetas de investigación por año
+delitos_ao10 = df1_10.pivot_table(index=['ao_hechos'], aggfunc='size')
+print(delitos_ao10)
+
+#El número de carpetas de investigación por mes
+delitos_mes10 = df1_10.pivot_table(index=['mes_hechos'], aggfunc='size')
+print(delitos_mes10)
+
+#El número de carpetas de investigación por categoria del delito
+delitos_cat10 = df1_10.pivot_table(index=['categoria_delito'], aggfunc='size')
+print(delitos_cat10)
+\
+
+dele11 = df1['alcaldia_hechos']=='MIGUEL HIDALGO'
+df1_11 = df1[dele11]
+print("Miguel Hidalgo")
+print(df1_11)
+
+#El número de carpetas de investigación por año
+delitos_ao11 = df1_11.pivot_table(index=['ao_hechos'], aggfunc='size')
+print(delitos_ao11)
+
+#El número de carpetas de investigación por mes
+delitos_mes11 = df1_11.pivot_table(index=['mes_hechos'], aggfunc='size')
+print(delitos_mes11)
+
+#El número de carpetas de investigación por categoria del delito
+delitos_cat11 = df1_11.pivot_table(index=['categoria_delito'], aggfunc='size')
+print(delitos_cat11)
+\
+
+dele12 = df1['alcaldia_hechos']=='MILPA ALTA'
+df1_12 = df1[dele12]
+print("Milpa Alta")
+print(df1_12)
+
+#El número de carpetas de investigación por año
+delitos_ao12 = df1_12.pivot_table(index=['ao_hechos'], aggfunc='size')
+print(delitos_ao12)
+
+#El número de carpetas de investigación por mes
+delitos_mes12 = df1_12.pivot_table(index=['mes_hechos'], aggfunc='size')
+print(delitos_mes12)
+
+#El número de carpetas de investigación por categoria del delito
+delitos_cat12 = df1_12.pivot_table(index=['categoria_delito'], aggfunc='size')
+print(delitos_cat12)
+\
+
+dele13 = df1['alcaldia_hechos']=='TLAHUAC'
+df1_13 = df1[dele13]
+print("Tlahuac")
+print(df1_13)
+
+#El número de carpetas de investigación por año
+delitos_ao13 = df1_13.pivot_table(index=['ao_hechos'], aggfunc='size')
+print(delitos_ao13)
+
+#El número de carpetas de investigación por mes
+delitos_mes13 = df1_13.pivot_table(index=['mes_hechos'], aggfunc='size')
+print(delitos_mes13)
+
+#El número de carpetas de investigación por categoria del delito
+delitos_cat13 = df1_13.pivot_table(index=['categoria_delito'], aggfunc='size')
+print(delitos_cat13)
+\
+
+dele14 = df1['alcaldia_hechos']=='TLALPAN'
+df1_14 = df1[dele14]
+print("Tlalpan")
+print(df1_14)
+
+#El número de carpetas de investigación por año
+delitos_ao14 = df1_14.pivot_table(index=['ao_hechos'], aggfunc='size')
+print(delitos_ao14)
+
+#El número de carpetas de investigación por mes
+delitos_mes14 = df1_14.pivot_table(index=['mes_hechos'], aggfunc='size')
+print(delitos_mes14)
+
+#El número de carpetas de investigación por categoria del delito
+delitos_cat14 = df1_14.pivot_table(index=['categoria_delito'], aggfunc='size')
