@@ -16,7 +16,7 @@ Reporte de la nvestigación
 *También contara con un link para ver las gráficas desarolladas en Tableau
 
 La base de datos exportada como csv tiene fecha del 10 de Noviembre del 2020. Para una versión actualizada, usar la API que se encuentra en el código. 
-La base de datos de las gráficas también se encuentra bajo el nombre carpetas
+La base de datos de las gráficas también se encuentra bajo el nombre carpetas en formato pickle
 
 La presentación es un reporte de la investigación presentado de forma visual
 
