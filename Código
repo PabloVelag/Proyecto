@@ -1,3 +1,4 @@
+#importar las librerias que necesitamos
 import pandas as pd
 import numpy as np
 import json 
@@ -5,13 +6,14 @@ import requests
 
 url = 'https://datos.cdmx.gob.mx/api/v2/catalog/datasets/carpetas-de-investigacion-pgj-de-la-ciudad-de-mexico/exports/json'
 response= requests.get(url)
+#descargar la base de datos de internet mediante a una API
 
 df = pd.read_json(response.content)
 
-#por ahora vamos a trabajar con carpetas desde el 2015
-#Crear un data frame con pura categoría de robo
+#Trabajar con carpetas desde el 2016 porque no hay suficientes datos del 2015 para atras
+#Crear un data frame con pura categoría de robo 
 #Crear un data frame de sólo las delegaciones de la CDMX
-#vamos a crear un nuevo data frame con nuestras columnas de interés
+#Crear un nuevo data frame con nuestras columnas de interés. Estó es para poder manejar la base de datos con mayor comodida al igual que para ocupar menos espacio en la memoria.
 
 ao = df['ao_hechos'].isin(['2016','2017','2018','2019','2020'])
 
@@ -35,8 +37,9 @@ print(df1)
 print(df1.dtypes)
 df1.to_csv('carpetas_limpio.csv')
 
-#Ya tenemos nuestro data frame y lo exportamos como csv
+#Ya tenemos nuestro data frame y lo exportamos como csv. Es importante solo descargarlo una vez si no quieres muchas copias.
 \
+#Hacemos las preguntas que nos queremos responder
 
 #El número de carpetas de investigación por año
 delitos_ao = df1.pivot_table(index=['ao_hechos'], aggfunc='size')
