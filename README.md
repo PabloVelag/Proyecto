@@ -20,5 +20,5 @@ La base de datos de las gráficas también se encuentra bajo el nombre carpetas 
 
 La presentación es un reporte de la investigación presentado de forma visual. No contiene todos los elementos del reporte escrito y tampoco pretende sustituir
 al reporte escrito. La presentación está diseñada con el propósito de ser usada como herramienta para explicar el proyecto de forma fluida por alguien que 
-previamente tiene conocimiento sobre el tema.
+previamente tiene conocimiento sobre el tema. La fuentes de la presentación son las mismas que las usadas para elaborar el reporte escrito.
 
